@@ -1,0 +1,11 @@
+{
+    "author": "Dmitry Berezovsky",
+    "back": false,
+    "exclude": "",
+    "include": "*.py",
+    "license": "mit",
+    "program": "Pandoc Flow",
+    "short": "Pandoc Flow - Augments Pandoc with advanced pre-processing, automates routine",
+    "single": true,
+    "year": "2021"
+}
