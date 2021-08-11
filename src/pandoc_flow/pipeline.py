@@ -27,7 +27,7 @@ from typing import Optional
 import pandoc_flow.const
 from strome.pipeline import StromeRuntime
 
-LOGGER = logging.getLogger("preprocessor")
+LOGGER = logging.getLogger("pipeline")
 
 
 class PandocFlowRuntime(StromeRuntime):
