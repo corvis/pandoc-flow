@@ -34,7 +34,7 @@ from strome import const
 from strome import processors
 from strome.core import setup_pipeline, load_libs, load_context_path, preload_modules, run_pipeline
 
-arg_parser = argparse.ArgumentParser("pandoc_jinja2")
+arg_parser = argparse.ArgumentParser("pandoc-flow")
 arg_parser.add_argument("config_file", type=str, action="store")
 
 processors.REGISTRY.register(Jinja2Processor)

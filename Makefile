@@ -7,6 +7,7 @@ PYPI_API_KEY :=
 PYPI_REPOSITORY_URL :=
 ALPHA_VERSION :=
 SRC_ROOT := ./src/pandoc_flow
+PYTHON := python3
 
 .DEFAULT_GOAL := pre_commit
 
