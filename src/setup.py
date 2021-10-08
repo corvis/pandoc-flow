@@ -121,7 +121,7 @@ setup(
     python_requires='>3.6',
 
     # Structure
-    packages=find_packages(include=['pandoc_flow', 'pandoc_flow.*', ]),
+    packages=find_packages(include=['*'], where=src_dir),
     # py_modules=["app", 'cli', 'daemonize'],
 
     install_requires=requirements,
