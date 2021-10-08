@@ -121,7 +121,7 @@ setup(
     python_requires='>3.6',
 
     # Structure
-    packages=find_packages(include=['pandoc_flow', 'pandoc_flow.*']),
+    packages=find_packages(include=['pandoc_flow', 'pandoc_flow.*', ]),
     # py_modules=["app", 'cli', 'daemonize'],
 
     install_requires=requirements,
@@ -130,13 +130,9 @@ setup(
     # pip install -e .[dev,test]
     extras_require={},
 
-    package_data={
-        # 'examples': [path.join(root_dir, 'examples')],
-    },
-
     # test_suite='nose2.collector.collector',
     # tests_require=[
     #     'nose2==0.8.0',
     # ],
-    entry_points={}
+
 )
