@@ -82,6 +82,17 @@ build: copyright format lint clean
        echo "DONE: source distribution"; \
     )
 
+docker:
+	@( \
+       set -e; \
+       if [ -z $(TAG) ]; then TAG="dev"; echo "Missing TAG argument defaulting to $$TAG"; fi; \
+       echo "Building docker image pandoc-flow:$$TAG..."; \
+       PANDOC_FLOW_VERSION=`development/get-version.sh`; \
+       RELEASE_DATE=`TZ="Europe/Kiev" date +%Y-%m-%d`; \
+       docker build -t pandoc-flow:$$TAG --build-arg "PANDOC_FLOW_VERSION=$$PANDOC_FLOW_VERSION" --build-arg "RELEASE_DATE=$$RELEASE_DATE" . ; \
+       echo "DONE: Docker Build"; \
+    )
+
 clean:
 	@(rm -rf src/build dist/* *.egg-info src/*.egg-info .pytest_cache)
 
@@ -95,6 +106,11 @@ publish:
        twine upload -r pypi dist/*; \
        echo "DONE: Publish"; \
     )
+
+get-version:
+	@( \
+		development/get-version.sh; \
+	)
 
 set-version:
 	@( \
@@ -111,6 +127,6 @@ deps:
 
 venv:
 	@( \
-		virtualenv $(VIRTUAL_ENV_PATH); \
+		$(PYTHON) -m venv $(VIRTUAL_ENV_PATH); \
 		source ./venv/bin/activate; \
 	)
