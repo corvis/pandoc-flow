@@ -1,0 +1,5 @@
+/.mypy_cache/
+/dist/
+/venv/
+/src/build/
+/src/pandoc_flow.*/

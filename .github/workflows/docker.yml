@@ -1,0 +1,65 @@
+name: Build docker images
+on:
+#  workflow_run:
+#    workflows: ["Release"]
+#    types:
+#      - completed
+
+  workflow_dispatch:
+    inputs:
+      pandoc_version:
+        required: true
+        default: latest
+        description: 'Version of pandoc to be embedded'
+      pandoc_flow_version:
+        required: true
+        description: 'Pandocflow version'
+
+env:
+  REGISTRY: docker.io
+  IMAGE_NAME: corvis/pandoc-flow
+
+jobs:
+  run:
+    name: Build and publish docker images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Version from workflow event
+        run: |
+          PANDOC_VERSION=${{ github.event.inputs.pandoc_version }}
+          PANDOC_FLOW_VERSION=${{ github.event.inputs.pandoc_flow_version }}
+          echo "Pandoc Version = $PANDOC_VERSION"
+          echo "Pandoc-Flow Version = $PANDOC_FLOW_VERSION"
+          export RELEASE_DATE=`TZ="Europe/Kiev" date +%Y-%m-%d`
+          echo "PANDOC_VERSION=$PANDOC_VERSION" >> $GITHUB_ENV
+          echo "PANDOC_FLOW_VERSION=$PANDOC_FLOW_VERSION" >> $GITHUB_ENV
+          echo "RELEASE_DATE=$RELEASE_DATE" >> $GITHUB_ENV
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+#          ref: 'refs/tags/v${{ env.VERSION }}'
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          push: true
+          build-args: |
+            PANDOC_FLOW_VERSION=${{ env.PANDOC_FLOW_VERSION }}
+            PANDOC_VERSION=${{ env.PANDOC_VERSION }}
+            RELEASE_DATE=${{ env.RELEASE_DATE }}
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.PANDOC_FLOW_VERSION }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.PANDOC_FLOW_VERSION }}-pandoc${{ env.PANDOC_VERSION }}
