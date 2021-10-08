@@ -87,7 +87,7 @@ setup(
     description='Pandoc Flow - Augments Pandoc with advanced pre-processing, automates routine',
     long_description=long_description,
     url='https://github.com/corvis/pandoc-flow',
-    keywords='python cli processing pandoc pre-processor',
+    keywords='pandoc pre-process processing pipiline document generator',
 
     # Author
     author='Dmitry Berezovsky',
