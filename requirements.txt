@@ -1,1 +1,1 @@
-strome
+strome~=1.0.0
